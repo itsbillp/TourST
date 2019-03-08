@@ -48,7 +48,7 @@ $(document).ready(function() {
       //assemble card elements 3: eventBtn
       var cardFooter = $('<div>').attr("class", "card-footer");
         // loading this button with attr pertaining to needed variables upon select......
-      var cardChoose = $('<div>').attr("class", "chooseThis btn btn-block btn-outline-primary").attr("data-cardBody",cardBody).attr("data-eventPic", eventObj._embedded.events[i].images[4].url).attr("data-venuename",eventVenueName).attr("data-eventname",eventNameData).attr("data-eventdate", eventDatesData).attr("data-eventzip", eventZipData).attr("data-eventcity", eventCityState).attr("data-ticketprice", priceRange).text("Select Event");
+      var cardChoose = $('<div>').attr("class", "chooseThis btn btn-block btn-outline-primary").attr("data-cardBody",cardBody).attr("data-eventPic", eventObj._embedded.events[i].images[4].url).attr("data-venuename",eventVenueNameData).attr("data-eventname",eventNameData).attr("data-eventdate", eventDatesData).attr("data-eventzip", eventZipData).attr("data-eventcity", eventCityState).attr("data-ticketprice", priceRange).text("Select Event");
       var eventBtn = cardFooter.append(cardChoose);
       
       //combine Zord: "eventTotal card"
@@ -127,14 +127,12 @@ $(document).ready(function() {
         selectedTicketPrice =  $(this).attr("data-ticketprice");
         $("#resultsDisplay").empty();
         $("#userLocation").empty();
-        
-        console.log("TESTING ONLY DELETE ON FINAL :::  Score! You chose: " + selectedEventName + " at " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + ". Flight options if needed will show below:");
   
         // OBJECT of Selected Event
         var selectedObj = {selectedCardPic, selectedCardBody, selectedEventName, selectedVenueName, selectedVenueCity, selectedVenueZip, selectedVenueDate, selectedTicketPrice}
   
-        // TESTING ONLY:
-        var chosenPrompt = $("<h1>").attr("class","text-white").text("Score! You chose: " + selectedEventName + " at " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + " for $" + selectedTicketPrice + ". Flight options if needed will show below:");
+        // DISPLAY over DIV when user selects event
+        var chosenPrompt = $("<h1>").attr("class","text-white").text("Score! You chose: " + selectedEventName + " at " + selectedVenueName + " in " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + " for $" +  selectedTicketPrice + " . Flight options if needed will show below:");
   
         $("#userLocation").append(chosenPrompt);
         // displaySelectedEvent(selectedObj);

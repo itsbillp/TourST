@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TourST</title>
+  
+    <!-- Link to Bootstrap-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+   
+    <!--Link to CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    
+    <!--Link to jquery-->
+
+
+<style>
+   #home {
+    background-image: url("assets/images/image_4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    background-attachment: fixed;
+    width: 100%;
+    }
+
+    .navbar {
+        background-color: black !important;
+
+    }
+
+    .nav-link {
+        color: whitesmoke;
+
+    }
+    .container {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+    }
+    #userBrief {
+        color:whitesmoke;
+   
+    }
+    .navbar-brand {
+        color: #56DAA1 !important;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .navbar-nav a:hover {
+        color: #56DAA1 !important;
+    
+    }
+
+    #submitbtn {
+        background-color:#56DAA1;
+        border-color: #56DAA1;
+    }
+
+    #fineprint {
+        font-size: 10px;
+    }
+    .navbar-toggler  {
+      /* background-color: #56DAA1 !important; */
+  }
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">TourST</a>
+        <button class="navbar-toggler" type="button" data-toggle="dropdown" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Event</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Flight</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Total</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+      <!--adding div to for spacer between content-->
+      <br>
+      <br>
+      <br>
+
+<!--Home Section for search bar and user brief-->
+  <section id="home">
+    <div class="container" id="userBrief">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <!--User Brief-->
+          <h1 class="mt-5">Any Interest. Anywhere.</h1>
+          <p>TourST makes it easy for you to explore events based on your interests and plan an amazing experience around it.  Just type it into the search bar to get started. </p>
+          <p id=fineprint>Currently availabe for music events within the United States</p>
+          <br>
+
+          <!--Search bar as sub rows within the div-->
+          <form>
+              <div class="form-row align-items-center">
+                  <div class="col-lg-9">
+                      <label class="sr-only" for="inlineFormInput">Name</label>
+                      <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="What's your interest?">
+                  </div>
+
+                  <div class="col-auto">
+                      <button type="submit" class="btn btn-primary mb-2" id="submitbtn">Submit</button>
+                  </div>
+              </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+   <!-- </div> -->
+   <div id="resultsContainer" class="container">
+      <div id="resultsDisplay"  class="card-columns"></div>
+      <div id="userLocation">
+        are you traveling to the location?
+      </div>
+   </div>
+   
+   <div id="travel">
+       <p>"Great" </p>
+       <p>Will you be traveling to this event?</p>
+       <p>If no give them more event info and possibly some other value add</p>
+       <p>If yes then we grab location and show travel options</p>
+       <p>(we have a default as +/- 2 days and possibly make that dynamic if we figure it out ) </p>
+   </div>
+   <div id="summary">
+       <h3>Trip Summary</h3>
+       <ul class="list-group">
+               <li class="list-group-item d-flex justify-content-between align-items-center">
+                 Venue (Concert)
+                 <span class="badge badge-primary badge-pill">$(ticket cost)</span>
+               </li>
+               <li class="list-group-item d-flex justify-content-between align-items-center">
+                 Airfare
+                 <span class="badge badge-primary badge-pill">$(Airfare cost)</span>
+               </li>
+               <li class="list-group-item d-flex justify-content-between align-items-center">
+                 Hotel
+                 <span class="badge badge-primary badge-pill">$(Hotel cost)</span>
+               </li>
+               <li class="list-group-item d-flex justify-content-between align-items-center">
+                 Average location spending from budget api
+                 <span class="badge badge-primary badge-pill">$(spending budget)</span>
+               </li>
+             </ul>
+   </div>
+
+   <!--Optional-->
+   <div id="weather">
+       <h3>5-day Weather Forecast</h3>
+       <p>pull from weather channel api with 5 day forecast</p>
+       <p>if possible pull graphs</p>
+   </div>
+
+
+   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+   <script src="assets/javascript/app.js"></script>
+   <script src="assets/javascript/app2.js"></script>
+
+</body>
+
+</html>

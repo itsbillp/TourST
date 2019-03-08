@@ -18,8 +18,9 @@ TourST makes it easy for you to explore events based on your interests and plan 
 Which APIs we are using
     Urls to APIs
     
-    Technologies used bootstrap
-(and paste in our original request from the beginning of the project
+Technologies used bootstrap
+
+and paste in our original request from the beginning of the project
 
 Kajak Rapid API
 
@@ -32,3 +33,14 @@ bootstrap
 
 Jquery 
 
+ *File List*
+Index.html 
+	• /Assets
+		○ /Javascript
+			§ App.js Omar
+			§ App2.js Toms
+			§ App3.js Bill
+		○ /Css
+			§ Style.css
+		○ /Images
+Image gallery for background.png

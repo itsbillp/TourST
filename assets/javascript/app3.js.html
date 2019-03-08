@@ -1,0 +1,74 @@
+<!-- in HTML format for Testing Purposes  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+    Console Log-->
+
+<!-- JS begins -->
+
+    <script>
+
+    // Aviation Edge API for Converting City Into Airport Code
+
+        var city = "new york"
+        var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+        }).then(function(response) {
+        console.log(JSON.parse(response).airportsByCities[0].codeIataAirport);
+        })
+
+    // Function for Translating Event Date into Travel Dates 
+   
+        var now = new Date();
+        now.setDate(now.getDate() + 2);
+        console.log(now)
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var days = now.getDate();
+        console.log(`${year}-${padZero(month)}-${padZero(days)}`);
+        function padZero(number) {
+            if (number < 10 && number >= 0) {
+                return `0${number}`;
+            }
+            return number;
+        }
+
+    // Kajak Rapid API for Pulling Flight Data and Prices
+   
+        var origin1 = "JFK"
+        var destination1 = "SFO"
+        var origin2 = destination1
+        var destination2 = origin1
+        var departDate1 = "2019-12-25"
+        var returnDate1 = "2019-12-20"
+
+        var queryURL = "https://cors-anywhere.herokuapp.com/https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?origin1="+ origin1 + "&destination1=" + destination1 + "&departdate1=" + departDate1 + "&cabin=e&currency=USD&adults=1&bags=0";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            headers: {
+                "X-RapidAPI-Key": "871ca5bc58msh49221186130d315p1ac36ajsn31db79bd12d4",
+                }      
+        }).then(function(response) {
+        console.log(response.cheapestPrice);console.log(response)
+        })
+
+
+
+      </script>
+
+
+</body>
+</html>

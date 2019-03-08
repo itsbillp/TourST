@@ -46,9 +46,27 @@ Index.html
 Image gallery for background.png
 
 
+`
+`
+`
+`
+`
+`
+`
+`
+`
 
 Below is a template I pulled off the internet that will help us format our readme to look super professional:
 
+`
+`
+`
+`
+`
+`
+`
+`
+`
 
 
 

@@ -1,5 +1,27 @@
 $(document).ready(function() {
 
+  //Function to generate random background image
+
+function randomImage(){
+  var images = [
+      'assets/images/image_3.jpg',
+      'assets/images/image_2.jpg',
+      'assets/images/image_4.jpg',
+      'assets/images/image_8.jpg',
+      'assets/images/image_5.jpg'
+  ];
+
+  var size = images.length;
+  var i = Math.floor(size * Math.random());
+  console.log(i);
+
+  var element = document.getElementById('picturewrapper');
+  console.log(element);
+  element.style['background-image'] = "url("+ images[i] +")";
+}
+
+randomImage();
+
   //GLOBAL VARIABLES
   var selectedEventName = "";
   var selectedVenueCity = "";
@@ -83,6 +105,7 @@ $(document).ready(function() {
   
   // Event listener for all artist submit elements
   $("#submitbtn").on("click", function(event) {
+    $("#userLocation").empty();
     event.preventDefault();
     console.log("SUBMIT BUTTON CLICKED!");
     $("#resultsDisplay").empty();
@@ -123,119 +146,126 @@ $(document).ready(function() {
         // OBJECT of Selected Event
         var selectedObj = {selectedCardPic, selectedCardBody, selectedEventName, selectedVenueName, selectedVenueCity, selectedVenueZip, selectedVenueDate, selectedTicketPrice}
         console.log(selectedObj.selectedVenueDate);
-        // TESTING ONLY:
-        var chosenPrompt = $("<h1>").attr("class","text-white").text("Score! You chose: " + selectedEventName + " at " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + " for $" + selectedTicketPrice + ".");
-  
+        
+        
+        
+        
+        // Results:
+        var chosenPrompt = $("<h1>").attr("class","text-white").html("You chose: <br>" + selectedEventName + "<br> in " + selectedVenueCity.split(",")[0] + "<br> on "  + moment(selectedVenueDate).format("MMM Do YYYY") + "<br> for $" + selectedTicketPrice + "<br><div id=flights> Flight Results Loading...");
+        $("#footerInfo").empty();
+        $("#footerInfo").append("Trip Total: $" + selectedTicketPrice);
         $("#userLocation").append(chosenPrompt);
         // displaySelectedEvent(selectedObj);
         
         
-        /* 
-        Itinerary Builder Start
-        */
-       
-       
-       dateDepart();
-       
+/* 
+Itinerary Builder Start
+*/
 
-// Functions for Translating Event Date into Travel Dates 
 
-    function dateDepart() {
-      var date = new Date(selectedObj.selectedVenueDate);
-      date.setDate(date.getDate() + (-1));
-      var dDate = ('0' + date.getDate()).slice(-2);
-      var mm = ('0' + (date.getMonth()+1)).slice(-2);
-      var y = date.getFullYear();
-      departDate = y + '-' +  mm  + '-' + dDate;
-      console.log("depart "+departDate);
-      // $("#results").append(departDate +" = Depart Date <br>");
-      dateReturn();
-      }
-  
-      function dateReturn() {
-      var date = new Date(selectedObj.selectedVenueDate);
-      date.setDate(date.getDate() + (+3));
-      var rDate = ('0' + date.getDate()).slice(-2);
-      var mm = ('0' + (date.getMonth()+1)).slice(-2);
-      var y = date.getFullYear();
-      returnDate = y + '-' +  mm  + '-' + rDate;
-      console.log("return "+returnDate);
-      // $("#results").append(returnDate +" = Return Date");
-      city1Airport();
-      }
-  
-      // Aviation Edge API for Converting Origin City Into Airport Code 
+    dateDepart();
+
+
+    // Functions for Translating Event Date into Travel Dates 
+
+        function dateDepart() {
+          var date = new Date(selectedObj.selectedVenueDate);
+          date.setDate(date.getDate() + (-1));
+          var dDate = ('0' + date.getDate()).slice(-2);
+          var mm = ('0' + (date.getMonth()+1)).slice(-2);
+          var y = date.getFullYear();
+          departDate = y + '-' +  mm  + '-' + dDate;
+          console.log("depart "+departDate);
+          // $("#results").append(departDate +" = Depart Date <br>");
+          dateReturn();
+          }
       
-  
+          function dateReturn() {
+          var date = new Date(selectedObj.selectedVenueDate);
+          date.setDate(date.getDate() + (+3));
+          var rDate = ('0' + date.getDate()).slice(-2);
+          var mm = ('0' + (date.getMonth()+1)).slice(-2);
+          var y = date.getFullYear();
+          returnDate = y + '-' +  mm  + '-' + rDate;
+          console.log("return "+returnDate);
+          // $("#results").append(returnDate +" = Return Date");
+          city1Airport();
+          }
+      
+          // Aviation Edge API for Converting Origin City Into Airport Code 
           
-          function city1Airport() {
-              var city = "new york";
+      
+              
+              function city1Airport() {
+                  var city = "new york";
+                  var queryURL = "https://cors-anywhere.herokuapp.com/https://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+                  $.ajax({
+                      url: queryURL,
+                      method: "GET",
+                  }).then(function(response) {
+                      origin1 = JSON.parse(response).cities[0].codeIataCity;
+                      // console.log(response);
+                      console.log(origin1);
+                      // $("#results").append("<br>" + origin1 +" = Origin Airport Code");
+                      city2Airport();
+                      console.log(selectedObj.selectedVenueCity.split(",")[0]);
+                  })
+              }
+              // Aviation Edge API for Converting Event City Into Airport Code
+              
+          function city2Airport() {
+              var city = selectedObj.selectedVenueCity.split(",")[0];
               var queryURL = "https://cors-anywhere.herokuapp.com/https://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
               $.ajax({
                   url: queryURL,
                   method: "GET",
               }).then(function(response) {
-                  origin1 = JSON.parse(response).cities[0].codeIataCity;
-                  // console.log(response);
-                  console.log(origin1);
-                  // $("#results").append("<br>" + origin1 +" = Origin Airport Code");
-                  city2Airport();
-                  console.log(selectedObj.selectedVenueCity.split(",")[0]);
-              })
+              destination1 = JSON.parse(response).cities[0].codeIataCity;
+              // console.log(response);
+              console.log(destination1);
+              // $("#results").append("<br>" + destination1 +" = Destination Airport Code");
+              flightPrices();
+          })
           }
-          // Aviation Edge API for Converting Event City Into Airport Code
           
-      function city2Airport() {
-          var city = selectedObj.selectedVenueCity.split(",")[0];
-          var queryURL = "https://cors-anywhere.herokuapp.com/https://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+      
+      // Kajak API for Pulling Flight Data and Prices
+      
+      function flightPrices() {
+      
+          var origin2 = destination1;
+          var destination2 = origin1;
+          var departDate1 = departDate;
+          var returnDate1 = returnDate;
+          var queryURL = "https://cors-anywhere.herokuapp.com/https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?origin2="+ origin2 +"&departdate2="+ returnDate1+"&destination2="+destination2+"&origin1="+origin1+"&destination1="+destination1+"&departdate1="+departDate1+"&cabin=e&currency=USD&adults=1&bags=0";
+          // console.log(queryURL)
           $.ajax({
               url: queryURL,
               method: "GET",
+              headers: {
+                  "X-RapidAPI-Key": "871ca5bc58msh49221186130d315p1ac36ajsn31db79bd12d4",
+                  }      
           }).then(function(response) {
-          destination1 = JSON.parse(response).cities[0].codeIataCity;
+          console.log(response.cheapestPrice);
+          $("#flights").empty();
           // console.log(response);
-          console.log(destination1);
-          // $("#results").append("<br>" + destination1 +" = Destination Airport Code");
-          flightPrices();
-      })
+          // $("#results").append("<br> Flights Starting From: $"+ response.cheapestPrice);
+          $("#flights").append($("<h1>").attr("class","text-white").text(" Flight options as low as: $"+response.cheapestPrice))
+          $("#footerInfo").empty();
+          $("#footerInfo").append("Trip Total: $" + (response.cheapestPrice + parseInt(selectedTicketPrice)));
+          console.log(parseInt(selectedTicketPrice));
+          })
       }
-      
-  
-  // Kajak API for Pulling Flight Data and Prices
-  
-  function flightPrices() {
-  
-      var origin2 = destination1;
-      var destination2 = origin1;
-      var departDate1 = departDate;
-      var returnDate1 = returnDate;
-      var queryURL = "https://cors-anywhere.herokuapp.com/https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?origin2="+ origin2 +"&departdate2="+ returnDate1+"&destination2="+destination2+"&origin1="+origin1+"&destination1="+destination1+"&departdate1="+departDate1+"&cabin=e&currency=USD&adults=1&bags=0";
-      // console.log(queryURL)
-      $.ajax({
-          url: queryURL,
-          method: "GET",
-          headers: {
-              "X-RapidAPI-Key": "871ca5bc58msh49221186130d315p1ac36ajsn31db79bd12d4",
-              }      
-      }).then(function(response) {
-      console.log(response.cheapestPrice);
-      // console.log(response);
-      // $("#results").append("<br> Flights Starting From: $"+ response.cheapestPrice);
-      $("#userLocation").append($("<h1>").attr("class","text-white").text(" Flight options as low as: $"+response.cheapestPrice))
-      })
-  }
   
   /* 
   Itinerary Builder End
   */
   
+});
 
-        });
-        
-      });
-  
-    });
-  });
-  
+});
+
+});
+});
   
 

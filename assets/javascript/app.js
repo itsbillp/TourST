@@ -75,9 +75,9 @@ randomImage();
       
       //combine Zord: "eventTotal card"
       var eventTotal = listDiv.append(eventPic, cardBody, eventBtn);
-  
+      var totalCard = $("<div class=totalcard img-fluid>").append(eventTotal);
       //display to DOM at designated ID
-      $("#resultsDisplay").append(eventTotal);
+      $("#resultsDisplay").append(totalCard);
       }
       console.log("results displayed function side");
   

@@ -1,6 +1,6 @@
-* {
+/* * {
   border: solid red 1px;
-}
+} */
 #home {
     /* background-image: url("/assets/images/image_4.jpg"); */
     /* background-repeat: no-repeat; */
@@ -77,18 +77,20 @@
   .card-footer {
     background-color: black;
     opacity: 0.9;
+    text-size-adjust: 125%;
   }
 
   .card {
     width: 250px !important;
-    max-height: 50px !important;
+    /* max-height: 50px !important; */
     color: whitesmoke !important;
     background-color: black !important;
     opacity: 0.9;
     font-size: 15px;
     align-content: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
+    display: table;
+    clear: both;
 
   }
 
@@ -97,3 +99,9 @@
       color: black !important;
       outline-color: black !important;
   }
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-columns {
+    column-count: 2;
+  }
+}

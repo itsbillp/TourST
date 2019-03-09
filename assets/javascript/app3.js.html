@@ -82,7 +82,7 @@
             $("#results").append(returnDate +" = Return Date");
             }
 
-            // Aviation Edge API for Converting City Into Airport Code FOR USER
+            // Aviation Edge API for Converting Origin City Into Airport Code 
     
             function city1Airport() {
                 var city = $("#userCity").text();
@@ -97,7 +97,7 @@
                 $("#results").append("<br>" + origin1 +" = Origin Airport Code");
             })
             }
-            // Aviation Edge API for Converting City Into Airport Code FOR EVENT
+            // Aviation Edge API for Converting Event City Into Airport Code
     
             function city2Airport() {
                 var city = $("#eventCity").text();
@@ -115,7 +115,6 @@
             
 
         // Kajak API for Pulling Flight Data and Prices
-        
         
         function flightPrices() {
 

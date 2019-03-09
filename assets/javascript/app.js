@@ -10,8 +10,8 @@ $(document).ready(function() {
   console.log(`init values: venuecity: ${selectedVenueCity} / venuezip: ${selectedVenueZip} / artist: ${selectedEventName} / price: ${selectedTicketPrice}`);
   
   function displayEventChoices(eventObj) {
-    for (var i = 0; i<5; i++) {
-      var listDiv = $("<div>").attr("class", "card text-black bg-white mb-3");
+    for (var i = 0; i<3; i++) {
+      var listDiv = $("<div>").attr("class", "card text-white bg-black mb-3");
   
       // generating variables from JSON response
       var priceRange = Math.floor(Math.random() * (90 - 50) + 50);
@@ -48,7 +48,7 @@ $(document).ready(function() {
       //assemble card elements 3: eventBtn
       var cardFooter = $('<div>').attr("class", "card-footer");
         // loading this button with attr pertaining to needed variables upon select......
-      var cardChoose = $('<div>').attr("class", "chooseThis btn btn-block btn-outline-primary").attr("data-cardBody",cardBody).attr("data-eventPic", eventObj._embedded.events[i].images[4].url).attr("data-venuename",eventVenueNameData).attr("data-eventname",eventNameData).attr("data-eventdate", eventDatesData).attr("data-eventzip", eventZipData).attr("data-eventcity", eventCityState).attr("data-ticketprice", priceRange).text("Select Event");
+      var cardChoose = $('<div>').attr("class", "chooseThis btn btn-block btn-outline-primary").attr("data-cardBody",cardBody).attr("data-eventPic", eventPic).attr("data-venuename",eventVenueName).attr("data-eventname",eventNameData).attr("data-eventdate", eventDatesData).attr("data-eventzip", eventZipData).attr("data-eventcity", eventCityState).attr("data-ticketprice", priceRange).text("Select Event");
       var eventBtn = cardFooter.append(cardChoose);
       
       //combine Zord: "eventTotal card"
@@ -58,37 +58,28 @@ $(document).ready(function() {
       $("#resultsDisplay").append(eventTotal);
       }
       console.log("results displayed function side");
+  
   };
-  ///////////
-  function displaySelectedEvent(chosenObj) {
-    console.log("Name of event is: " + chosenObj.selectedEventName);
-    var selectedDiv = $("<div>").attr("class", "card w-90 text-black bg-white mb-3");
-    
-
-    var eventName = $("<h5>").text(chosenObj.selectedEventName).attr("class","text-black");
-    var eventDates = $("<p>").text("Date: " + chosenObj.selectedVenueDate);
-    var eventVenueName = $("<p>").text("Venue: " + chosenObj.selectedVenueName);
-    var eventZip = $("<p>").text("Zip: " + chosenObj.selectedVenueZip);
-    var eventVenueCity = $("<p>").text(`City: ${chosenObj.selectedVenueCity}`);
-    var eventPriceDisplay = $("<p>").text("Avg Ticket Price: " + chosenObj.selectedTicketPrice);
-    
   
-    var passpic = $("<img>").attr("src", chosenObj.selectedEventPic).attr("class","card-img-top");
-
-    var cardholder = $("<div>").attr("class", "card-body");
-    var passbody = cardholder.append(        
-      eventName,
-      eventDates,
-      eventVenueName,
-      eventVenueCity,
-      eventZip,
-      eventPriceDisplay
-    );
+  // function displaySelectedEvent(chosenObj) {
+  //   console.log("Name of event is: " + chosenObj.selectedEventName);
+  //   var selectedDiv = $("<div>").attr("class", "card w-90 text-black bg-white mb-3");
   
-    var selectedEvent = selectedDiv.append(passpic, passbody);
-    $("#resultsDisplay").append(selectedEvent);
-  }
-  ////////////
+  //   var eventName = $("<h5>").text(chosenObj.selectedEventName).attr("class","text-black");
+  //   var eventDates = $("<p>").text("Date: " + chosenObj.selectedVenueDate);
+  //   var eventVenueName = $("<p>").text("Venue: " + chosenObj.selectedVenueName);
+  //   var eventZip = $("<p>").text("Zip: " + chosenObj.selectedVenueZip);
+  //   var eventVenueCity = $("<p>").text(`City: ${chosenObj.selectedVenueCity}`);
+  //   var eventPriceDisplay = $("<p>").text("Avg Ticket Price: " + chosenObj.selectedTicketPrice);
+  
+  
+  //   var passpic = passpic.text(chosenObj.selectedCardPic);
+  //   var passbody = passbody.text(chosenObj.selectedCardBody);
+  
+  //   var selectedEvent = selectedDiv.append(passpic, passbody);
+  //   $("#resultsDisplay").append(selectedEvent);
+  // }
+  
   
   // Event listener for all artist submit elements
   $("#submitbtn").on("click", function(event) {
@@ -98,8 +89,7 @@ $(document).ready(function() {
     var keyword = $("#inlineFormInput").val(); 
     // Constructing a URL to search Ticketmaster for list of events by keyword entered
     var queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + keyword + "&countryCode=US&apikey=Hvspzyaf9sT79FRlHNKREkFSLhoIZkDW";
-    
-    // getTicketmaster(queryURL);
+  
     $.ajax({url: queryURL, method: "GET" }).then(function(response) {
       var jString = JSON.stringify(response);
       var objEvent = JSON.parse(jString);
@@ -127,12 +117,14 @@ $(document).ready(function() {
         selectedTicketPrice =  $(this).attr("data-ticketprice");
         $("#resultsDisplay").empty();
         $("#userLocation").empty();
+        
+        console.log("TESTING ONLY DELETE ON FINAL :::  Score! You chose: " + selectedEventName + " at " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + ". Flight options if needed will show below:");
   
         // OBJECT of Selected Event
         var selectedObj = {selectedCardPic, selectedCardBody, selectedEventName, selectedVenueName, selectedVenueCity, selectedVenueZip, selectedVenueDate, selectedTicketPrice}
   
-        // DISPLAY over DIV when user selects event
-        var chosenPrompt = $("<h1>").attr("class","text-white").text("Score! You chose: " + selectedEventName + " at " + selectedVenueName + " in " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + " for $" +  selectedTicketPrice + " . Flight options if needed will show below:");
+        // TESTING ONLY:
+        var chosenPrompt = $("<h1>").attr("class","text-white").text("Score! You chose: " + selectedEventName + " at " + selectedVenueCity + " " + selectedVenueZip + " on " + selectedVenueDate + " for $" + selectedTicketPrice + ". Flight options as low as: $" +299 );
   
         $("#userLocation").append(chosenPrompt);
         // displaySelectedEvent(selectedObj);
@@ -142,4 +134,3 @@ $(document).ready(function() {
   });
   
   });
-  

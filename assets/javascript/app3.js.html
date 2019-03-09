@@ -9,67 +9,137 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+    <body>
 
-    Console Log-->
 
-<!-- JS begins -->
+
+
+
+            <button id="test">Test Button</button> <br>
+
+
+            <hr>
+
+
+            <p>Inputs</p>
+                User Location:
+                <span id="userCity">new york</span>
+                <br>
+                Event Location:
+                <span id="eventCity">los angeles</span>
+                <br>
+                Event Date:
+                <span id="eventDate">2019-10-01</span>
+
+            <hr>
+
+
+
+            <p>Results</p>
+            <div id="results"></div>
+
+
+
+
 
     <script>
+        
+        // Event Listener 
 
-    // Aviation Edge API for Converting City Into Airport Code
+        $("#test").on("click", function() {
+            event.preventDefault();
+            $("#results").empty();
+            city1Airport();
+            city2Airport();
+            dateDepart();
+            dateReturn();
+        });
+        
 
-    function city2Airport() {
-        var city = "new york"
-        var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-        }).then(function(response) {
-        console.log(JSON.parse(response).airportsByCities[0].codeIataAirport);
-        })
-    }
-    // Function for Translating Event Date into Travel Dates 
-    function dateBulder() {
-        var now = getDate;
-        now.setDate(now + 2);
-        console.log(now)
-        var year = now.getFullYear();
-        var month = now.getMonth() + 1;
-        var days = now.getDate();
-        console.log(`${year}-${padZero(month)}-${padZero(days)}`);
-        function padZero(number) {
-            if (number < 10 && number >= 0) {
-                return `0${number}`;
+
+        // Functions for Translating Event Date into Travel Dates 
+        
+
+            function dateDepart() {
+            var date = new Date($("#eventDate").text());
+            date.setDate(date.getDate() + (-1));
+            var dDate = ('0' + date.getDate()).slice(-2);
+            var mm = ('0' + (date.getMonth()+1)).slice(-2);
+            var y = date.getFullYear();
+            departDate = y + '-' +  mm  + '-' + dDate;
+            console.log("depart "+departDate);
+            $("#results").append(departDate +" = Depart Date <br>");
             }
-            return number;
-        }
-    }
-    // Kajak Rapid API for Pulling Flight Data and Prices
+        
+            function dateReturn() {
+            var date = new Date($("#eventDate").text());
+            date.setDate(date.getDate() + (+3));
+            var rDate = ('0' + date.getDate()).slice(-2);
+            var mm = ('0' + (date.getMonth()+1)).slice(-2);
+            var y = date.getFullYear();
+            returnDate = y + '-' +  mm  + '-' + rDate;
+            console.log("return "+returnDate);
+            $("#results").append(returnDate +" = Return Date");
+            }
+
+            // Aviation Edge API for Converting City Into Airport Code FOR USER
     
-        var origin1 = "JFK"
-        var destination1 = "SFO"
-        var origin2 = destination1
-        var destination2 = origin1
-        var departDate1 = "2019-12-25"
-        var returnDate1 = "2019-12-20"
+            function city1Airport() {
+                var city = $("#userCity").text();
+                var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+                }).then(function(response) {
+                origin1 = JSON.parse(response).cities[0].codeIataCity;
+                console.log(response);
+                console.log(origin1);
+                $("#results").append("<br>" + origin1 +" = Origin Airport Code");
+            })
+            }
+            // Aviation Edge API for Converting City Into Airport Code FOR EVENT
+    
+            function city2Airport() {
+                var city = $("#eventCity").text();
+                var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+                }).then(function(response) {
+                destination1 = JSON.parse(response).cities[0].codeIataCity;
+                console.log(response);
+                console.log(destination1);
+                $("#results").append("<br>" + destination1 +" = Destination Airport Code");
+            })
+            }
+            
 
-    function flightPrices() {
-        var queryURL = "https://cors-anywhere.herokuapp.com/https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?origin1="+ origin1 + "&destination1=" + destination1 + "&departdate1=" + departDate1 + "&cabin=e&currency=USD&adults=1&bags=0";
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-            headers: {
-                "X-RapidAPI-Key": "871ca5bc58msh49221186130d315p1ac36ajsn31db79bd12d4",
-                }      
-        }).then(function(response) {
-        console.log(response.cheapestPrice);console.log(response)
-        })
-    }
+        // Kajak API for Pulling Flight Data and Prices
+        
+        
+        function flightPrices() {
+
+            var origin2 = destination1;
+            var destination2 = origin1;
+            var departDate1 = departDate;
+            var returnDate1 = returnDate;
+            var queryURL = "https://cors-anywhere.herokuapp.com/https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?origin2="+ origin2 +"&departdate2="+ returnDate1+"&destination2="+destination2+"&origin1="+origin1+"&destination1="+destination1+"&departdate1="+departDate1+"&cabin=e&currency=USD&adults=1&bags=0";
+            console.log(queryURL)
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+                headers: {
+                    "X-RapidAPI-Key": "871ca5bc58msh49221186130d315p1ac36ajsn31db79bd12d4",
+                    }      
+            }).then(function(response) {
+            console.log(response.cheapestPrice);console.log(response)
+            $("#results").append("<br> Flights Starting From: $"+ response.cheapestPrice);
+            })
+        }
+        
+
+        </script>
 
 
-      </script>
-
-
-</body>
+    </body>
 </html>

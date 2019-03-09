@@ -170,7 +170,7 @@ $(document).ready(function() {
           
           function city1Airport() {
               var city = "new york";
-              var queryURL = "https://cors-anywhere.herokuapp.com/http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+              var queryURL = "https://cors-anywhere.herokuapp.com/https://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
               $.ajax({
                   url: queryURL,
                   method: "GET",
@@ -187,7 +187,7 @@ $(document).ready(function() {
           
       function city2Airport() {
           var city = selectedObj.selectedVenueCity.split(",")[0];
-          var queryURL = "https://cors-anywhere.herokuapp.com/http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+          var queryURL = "https://cors-anywhere.herokuapp.com/https://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
           $.ajax({
               url: queryURL,
               method: "GET",

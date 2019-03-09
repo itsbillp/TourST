@@ -23,10 +23,10 @@
 
             <p>Inputs</p>
                 User Location:
-                <span id="userCity">new york</span>
+                <span id="userCity">boston</span>
                 <br>
                 Event Location:
-                <span id="eventCity">los angeles</span>
+                <span id="eventCity">atlanta</span>
                 <br>
                 Event Date:
                 <span id="eventDate">2019-10-01</span>
@@ -44,15 +44,14 @@
 
     <script>
         
-        // Event Listener 
+        // Event Listener To Trigger Itinerary Builder  
 
         $("#test").on("click", function() {
             event.preventDefault();
             $("#results").empty();
-            city1Airport();
-            city2Airport();
             dateDepart();
-            dateReturn();
+            // dateReturn();
+            // city1Airport();
         });
         
 
@@ -69,6 +68,7 @@
             departDate = y + '-' +  mm  + '-' + dDate;
             console.log("depart "+departDate);
             $("#results").append(departDate +" = Depart Date <br>");
+            dateReturn();
             }
         
             function dateReturn() {
@@ -80,25 +80,29 @@
             returnDate = y + '-' +  mm  + '-' + rDate;
             console.log("return "+returnDate);
             $("#results").append(returnDate +" = Return Date");
+            city1Airport();
             }
 
             // Aviation Edge API for Converting Origin City Into Airport Code 
-    
-            function city1Airport() {
-                var city = $("#userCity").text();
-                var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
-                $.ajax({
-                    url: queryURL,
-                    method: "GET",
-                }).then(function(response) {
-                origin1 = JSON.parse(response).cities[0].codeIataCity;
-                console.log(response);
-                console.log(origin1);
-                $("#results").append("<br>" + origin1 +" = Origin Airport Code");
-            })
-            }
-            // Aviation Edge API for Converting Event City Into Airport Code
-    
+            
+  
+                
+                function city1Airport() {
+                    var city = $("#userCity").text();
+                    var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
+                    $.ajax({
+                        url: queryURL,
+                        method: "GET",
+                    }).then(function(response) {
+                        origin1 = JSON.parse(response).cities[0].codeIataCity;
+                        console.log(response);
+                        console.log(origin1);
+                        $("#results").append("<br>" + origin1 +" = Origin Airport Code");
+                        city2Airport();
+                    })
+                }
+                // Aviation Edge API for Converting Event City Into Airport Code
+                
             function city2Airport() {
                 var city = $("#eventCity").text();
                 var queryURL = "http://aviation-edge.com/v2/public/autocomplete?key=784b29-c30a1a&city=" + city;
@@ -110,6 +114,7 @@
                 console.log(response);
                 console.log(destination1);
                 $("#results").append("<br>" + destination1 +" = Destination Airport Code");
+                flightPrices();
             })
             }
             

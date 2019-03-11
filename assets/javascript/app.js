@@ -53,7 +53,7 @@ randomImage();
   
       // assemble card elements 2: cardBody
       var eventName = $("<h5>").text(eventNameData).attr("class","text-black");
-      var eventDates = $("<p>").text("Date: " + eventDatesData);
+      var eventDates = $("<p>").text("Date: " +  moment(eventDatesData).format("MMM Do YYYY"));
       var eventVenueName = $("<p>").text("Venue: " + eventVenueNameData);
       var eventZip = $("<p>").text("Zip: " + eventZipData);
       var eventVenueCity = $("<p>").text(`City: ${eventCityNameData}, ${eventStateData}`);
@@ -113,7 +113,8 @@ randomImage();
     // Constructing a URL to search Ticketmaster for list of events by keyword entered
     var queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + keyword + "&countryCode=US&apikey=Hvspzyaf9sT79FRlHNKREkFSLhoIZkDW";
   
-    $.ajax({url: queryURL, method: "GET" }).then(function(response) {
+    $.ajax({url: queryURL, method: "GET" })
+    .then(function(response) {
       var jString = JSON.stringify(response);
       var objEvent = JSON.parse(jString);
   
@@ -151,7 +152,7 @@ randomImage();
         
         
         // Results:
-        var chosenPrompt = $("<h1>").attr("class","text-white").html("You chose: <br>" + selectedEventName + "<br> in " + selectedVenueCity.split(",")[0] + "<br> on "  + moment(selectedVenueDate).format("MMM Do YYYY") + "<br> for $" + selectedTicketPrice + "<br><div id=flights> Flight Results Loading...");
+        var chosenPrompt = $("<h1>").attr("style","color: #56DAA1").html("You chose: <br>" + selectedEventName + "<br> in " + selectedVenueCity.split(",")[0] + "<br> on "  + moment(selectedVenueDate).format("MMM Do YYYY") + "<br> for $" + selectedTicketPrice + "<br><div id=flights> Flight Results Loading...");
         $("#footerInfo").empty();
         $("#footerInfo").append("Trip Total: $" + selectedTicketPrice);
         $("#userLocation").append(chosenPrompt);
@@ -248,9 +249,9 @@ Itinerary Builder Start
           }).then(function(response) {
           console.log(response.cheapestPrice);
           $("#flights").empty();
-          // console.log(response);
+          console.log(response);
           // $("#results").append("<br> Flights Starting From: $"+ response.cheapestPrice);
-          $("#flights").append($("<h1>").attr("class","text-white").text(" Flight options as low as: $"+response.cheapestPrice))
+          $("#flights").append($("<h1>").attr("style","color: #56DAA1").text(" Flight options as low as: $"+response.cheapestPrice))
           $("#footerInfo").empty();
           $("#footerInfo").append("Trip Total: $" + (response.cheapestPrice + parseInt(selectedTicketPrice)));
           console.log(parseInt(selectedTicketPrice));

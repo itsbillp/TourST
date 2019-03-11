@@ -105,3 +105,9 @@
     column-count: 2;
   }
 }
+
+#footerInfo {
+  color: #56DAA1 !important;
+  font-size: 150%;
+  padding: 4px;
+}

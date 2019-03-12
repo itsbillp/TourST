@@ -4,9 +4,9 @@
 
 This project is a collaboration between @itsbillp @T-car @jetsetpanda @pascalcalixte26 as part of Columbia University's Full Stack Developer Bootcamp 
 
-### [Github Page](https://itsbillp.github.io/TourST/)
+### [Github Page](https://itsbillp.github.io/Tourst/)
 
-### [Github Repository](https://github.com/itsbillp/TourST)
+### [Github Repository](https://github.com/itsbillp/Tourst)
 
 
 APIs used:

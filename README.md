@@ -10,10 +10,10 @@ This project is a collaboration between @itsbillp @T-car @jetsetpanda @pascalcal
 
 
 APIs used:
--Tickemaster
--Kajak (Rapid API for Kayak Flight search)
--Aviation Edge (translates locations into IATA Airport Codes)
--Budget Your Trip (gets location information on accomodations)
+- Tickemaster
+- Kajak (Rapid API for Kayak Flight search)
+- Aviation Edge (translates locations into IATA Airport Codes)
+- Budget Your Trip (gets location information on accomodations)
 
 Technologies / Libraries: 
 - Jquery
@@ -32,4 +32,5 @@ Technologies / Libraries:
   - Css *Folder*
     - Style.css
   - Images *Folder*
+    - Images
   - Powerpoint Presentation

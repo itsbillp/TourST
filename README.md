@@ -1,18 +1,18 @@
-# TourST
-Project 1 Group 6 Columbia Full Stack Bootcamp
-
-[Github Page:](https://itsbillp.github.io/TourST/)
-
-Github Page:
-https://itsbillp.github.io/TourST/
-
-Github Repository:
-https://github.com/itsbillp/TourST
-
-Readme suggestions:
-The basic functionality of the web app
+## Tourst
 
 TourST makes it easy for you to explore events based on your interests and plan an amazing experience around it.  Just type it into the search bar to get started.
+
+
+This project is a collaboration between [@itsbillp] [@T-Car] [@jetsetpanda] [@pascalcalixte26](https://github.com/pascalcalixte26)
+
+[Github Page](https://itsbillp.github.io/TourST/)
+
+[Github Repository](https://github.com/itsbillp/TourST)
+
+
+
+
+
 
 
 

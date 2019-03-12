@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <h1>Budget Your Trip API Test</h1>
+    <h2><input id="input" type="text" placeholder="Enter City Here"> <button>Test Location</button></h2>
+    <div id="results"></div>
+    <script>
+        
+        
+        $("button").on("click", function(event) {
+            var city = $("#input").val();
+            event.preventDefault();
+            $("#results").empty();
+            console.log(city);
+            test();
+            
+            function test() {
+                var queryURL = "https://cors-anywhere.herokuapp.com/https://www.budgetyourtrip.com/api/v3/search/location/"+ city + "?key=BILLPAPAS2019";
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+                }).then(function(response) {
+                    console.log(response)
+                    console.log(response.data[0].geonameid);
+                    geoName = response.data[0].geonameid;
+                    test2();
+                })
+            }
+            function test2() {
+                var queryURL = "https://cors-anywhere.herokuapp.com/https://www.budgetyourtrip.com/api/v3/costs/location/"+ geoName + "?key=BILLPAPAS2019";
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+                }).then(function(response) {
+                    console.log(response);
+                    console.log(response.data[11].value_midrange);
+                    midrangeCost = response.data[11].value_midrange
+                    $("#results").append("<div> Midrange Cost Per Person Per Day $" + Math.round(midrangeCost))
+                    })
+                }
+            });
+                
+       
+        
+    </script>
+
+</body>
+
+</html>

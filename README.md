@@ -1,4 +1,4 @@
-# Tourst
+# Tourst 
 
 ## A web based travel tool that helps users plan trips based on interests and events 
 
